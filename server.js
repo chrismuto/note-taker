@@ -1,7 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-// const api = require('./public/assets/js/index');
+const api = require('./public/assets/js/index');
 
 // Makes a constant for PORT to be used later to deploy
 const PORT = process.env.PORT || 3001;
@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware for parsing JSON and urlencoded form data from the public folder
 // Serves the static files
-// app.use('/api', api);
+app.use('/api', api);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
