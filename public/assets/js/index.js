@@ -3,7 +3,6 @@ let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
-let window = 'http://localhost:3001';
 
 if (window.location.pathname === '/notes') {
   noteTitle = document.querySelector('.note-title');
