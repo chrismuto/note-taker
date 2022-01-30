@@ -2,6 +2,7 @@ const fs = require('fs');
 const express = require('express');
 const path = require('path');
 const database = require('./db/db.json')
+const uuid1 = require('uuid1');
 
 // Makes a constant for PORT to be used later to deploy
 const PORT = process.env.PORT || 3001;
@@ -41,11 +42,8 @@ app.post('/api/notes', (req, res) => {
   // Prepare a response object to send back to the client
   // Check if there is anything in the response body
   const { title, text, id } = req.body;
-  let response = { title, text, id };
+  let response = { title, text, id: uuid1 };
   if (req.body) {
-    response = {
-      data: req.body,
-    };
     database.push(response);
   } else {
     res.status(400).json('stop sucking');
