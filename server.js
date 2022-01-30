@@ -12,7 +12,9 @@ const app = express();
 // Middleware for parsing JSON and urlencoded form data from the public folder
 // Serves the static files
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 app.use(express.static('public'));
 
 
@@ -20,7 +22,7 @@ app.use(express.static('public'));
 // Gets the index.html route
 // GET * should return the index.html file.
 app.get('/', (req, res) =>
-res.sendFile(path.join(__dirname, '/public/index.html'))
+  res.sendFile(path.join(__dirname, '/public/index.html'))
 );
 
 // GET /notes should return the notes.html file.
@@ -33,25 +35,23 @@ app.get('/api/notes', (req, res) => {
   res.status(200).json(database);
 });
 
-//Code to add a review/note
-// // POST request to add a review
-// app.post('/api/reviews', (req, res) => {
-//   // Log that a POST request was received
-//   console.info(`${req.method} request received to add a review`);
+// Code to add a review/note
+// POST request to add a review
+app.post('/api/notes', (req, res) => {
+  // Prepare a response object to send back to the client
+  // Check if there is anything in the response body
+  const { title, text, id } = req.body;
+  let response = { title, text, id };
+  if (req.body) {
+    response = {
+      data: req.body,
+    };
+    database.push(response);
+  } else {
+    res.status(400).json('stop sucking');
+  }
+})
 
-//   // Prepare a response object to send back to the client
-//   let response;
-
-//   // Check if there is anything in the response body
-//   if (req.body && req.body.product) {
-//     response = {
-//       status: 'success',
-//       data: req.body,
-//     };
-//     res.status(201).json(response);
-//   } else {
-//     res.status(400).json('Request body must at least contain a product name');
-//   }
 
 
 // app.post('/api/notes', (req, res) => {
