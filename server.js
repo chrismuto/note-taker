@@ -48,19 +48,25 @@ app.post('/api/notes', (req, res) => {
     );
     res.send("note added");
   } else {
-    res.status(400).json('stop sucking');
+    res.status(400).json('Sorry!');
   }
 })
 
 app.delete('/api/notes/:id', (req, res) => {
-  const {
-    id
-  } = req.params;
-  const noteID = database.find(note => note.id === id);
-  console.log(noteID);
-    if (noteID) {
+  // const {
+  //   id
+  // } = req.body;
+  // const ddbase = [];
+  // set array position to 0
+  // check element at 0
+  //if element at 0 !== id, filter out
+  //push filtered elements to new array
+  //set array position to next element
+  for (i = 0; i < database.length; i++) {
+    // console.log(database[i]);
+    if (req.params.id === database[i].id) {
+      database.splice(i, 1);
       console.log(database);
-      database.splice(noteID, 1).join('');
       fs.writeFile(`./db/db.json`, JSON.stringify(database), (err) =>
         err ?
         console.error(err) :
@@ -69,9 +75,10 @@ app.delete('/api/notes/:id', (req, res) => {
         )
       );
       res.send("removed");
+      return;
     }
   }
-);
+});
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
