@@ -20,11 +20,11 @@ app.get('/api/notes', (req, res) => {
 
 app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, '/public/notes.html'))
-  );  
+);
 
-  app.get('*', (req, res) =>
-    res.sendFile(path.join(__dirname, '/public/index.html'))
-  );
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
 
 app.post('/api/notes', (req, res) => {
   const {
@@ -52,6 +52,26 @@ app.post('/api/notes', (req, res) => {
   }
 })
 
+app.delete('/api/notes/:id', (req, res) => {
+  const {
+    id
+  } = req.params;
+  const noteID = database.find(note => note.id === id);
+  console.log(noteID);
+    if (noteID) {
+      console.log(database);
+      database.splice(noteID, 1).join('');
+      fs.writeFile(`./db/db.json`, JSON.stringify(database), (err) =>
+        err ?
+        console.error(err) :
+        console.log(
+          "Note removed"
+        )
+      );
+      res.send("removed");
+    }
+  }
+);
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
