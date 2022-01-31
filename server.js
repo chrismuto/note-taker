@@ -53,17 +53,7 @@ app.post('/api/notes', (req, res) => {
 })
 
 app.delete('/api/notes/:id', (req, res) => {
-  // const {
-  //   id
-  // } = req.body;
-  // const ddbase = [];
-  // set array position to 0
-  // check element at 0
-  //if element at 0 !== id, filter out
-  //push filtered elements to new array
-  //set array position to next element
   for (i = 0; i < database.length; i++) {
-    // console.log(database[i]);
     if (req.params.id === database[i].id) {
       database.splice(i, 1);
       console.log(database);
